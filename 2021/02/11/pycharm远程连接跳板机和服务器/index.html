@@ -79,17 +79,24 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="问题 实验室服务器仅限内网访问，同时实验室也提供了一个跳板机，可以先ssh到跳板机再从跳板机ssh到内网服务器。然而这种方式不方便传输文件，也没法用pycharm进行自动同步代码或者远程调试。本篇文章给出了一个该类问题的解决方案，即通过ssh隧道的方式，用Pycharm通过跳板机连接内网服务器。  注意pycharm专业版可以连接远程解释器，而社区版则不含有此功能。服务器端的账号配置此处不做处理。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://kyspring.github.io/2021/02/10/hello-world/index.html">
+<meta property="og:title" content="pycharm远程连接跳板机和服务器">
+<meta property="og:url" content="https://kyspring.github.io/2021/02/11/pycharm%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E8%B7%B3%E6%9D%BF%E6%9C%BA%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8/index.html">
 <meta property="og:site_name" content="当时年少春衫薄">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="问题 实验室服务器仅限内网访问，同时实验室也提供了一个跳板机，可以先ssh到跳板机再从跳板机ssh到内网服务器。然而这种方式不方便传输文件，也没法用pycharm进行自动同步代码或者远程调试。本篇文章给出了一个该类问题的解决方案，即通过ssh隧道的方式，用Pycharm通过跳板机连接内网服务器。  注意pycharm专业版可以连接远程解释器，而社区版则不含有此功能。服务器端的账号配置此处不做处理。">
 <meta property="og:locale" content="zh_CH">
-<meta property="article:published_time" content="2021-02-10T12:27:36.506Z">
-<meta property="article:modified_time" content="2021-02-10T12:27:36.506Z">
+<meta property="og:image" content="https://kyspring.github.io/images/xshell%E8%B7%B3%E6%9D%BF%E6%9C%BA.png">
+<meta property="og:image" content="https://kyspring.github.io/images/xshell%E8%B7%B3%E6%9D%BF%E6%9C%BA%E9%9A%A7%E9%81%93%E8%AE%BE%E7%BD%AE.png">
+<meta property="og:image" content="https://kyspring.github.io/images/%E5%86%85%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8.PNG">
+<meta property="og:image" content="https://kyspring.github.io/images/pycharm%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E8%A7%A3%E9%87%8A%E5%99%A8.png">
+<meta property="og:image" content="https://kyspring.github.io/images/pycharm%E8%A7%A3%E9%87%8A%E5%99%A8%E4%BF%AE%E6%94%B9.PNG">
+<meta property="og:image" content="https://kyspring.github.io/images/%E9%BB%98%E8%AE%A4%E7%9A%84%E8%BF%9C%E7%A8%8B%E8%A7%A3%E9%87%8A%E5%99%A8.PNG">
+<meta property="article:published_time" content="2021-02-11T07:38:32.000Z">
+<meta property="article:modified_time" content="2021-02-15T07:32:37.749Z">
 <meta property="article:author" content="OneShow">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kyspring.github.io/images/xshell%E8%B7%B3%E6%9D%BF%E6%9C%BA.png">
 
 
 
@@ -119,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://kyspring.github.io/2021/02/10/hello-world/"/>
+  <link rel="canonical" href="https://kyspring.github.io/2021/02/11/pycharm远程连接跳板机和服务器/"/>
 
 
 
 
 
-  <title>Hello World | 当时年少春衫薄</title>
+  <title>pycharm远程连接跳板机和服务器 | 当时年少春衫薄</title>
   
 
 
@@ -252,7 +259,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://kyspring.github.io/2021/02/10/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://kyspring.github.io/2021/02/11/pycharm%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E8%B7%B3%E6%9D%BF%E6%9C%BA%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -269,7 +276,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">pycharm远程连接跳板机和服务器</h1>
         
 
         <div class="post-meta">
@@ -281,8 +288,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-02-10T20:27:36+08:00">
-                2021-02-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-02-11T15:38:32+08:00">
+                2021-02-11
               </time>
             
 
@@ -319,15 +326,32 @@
       
 
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><blockquote>
+<p>实验室服务器仅限内网访问，同时实验室也提供了一个跳板机，可以先ssh到跳板机再从跳板机ssh到内网服务器。然而这种方式不方便传输文件，也没法用pycharm进行自动同步代码或者远程调试。本篇文章给出了一个该类问题的解决方案，即通过ssh隧道的方式，用Pycharm通过跳板机连接内网服务器。</p>
+</blockquote>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>pycharm专业版可以连接远程解释器，而社区版则不含有此功能。服务器端的账号配置此处不做处理。</p>
+<h2 id="设置SSH隧道"><a href="#设置SSH隧道" class="headerlink" title="设置SSH隧道"></a>设置SSH隧道</h2><ul>
+<li>这一步实际上也可以通过xshell直接可视化设置</li>
+<li>端口号可以自行选择<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -N -f -L 6001:&lt;内网服务器ip&gt;:22 -p &lt;跳板机端口&gt; username@&lt;跳板机ip&gt; -o TCPKeepAlive=yes</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -N -f -L 6001:wangshaochun@&lt;内网服务器ip&gt;:22 -p 2444 law@&lt;跳板机ip&gt; -o TCPKeepAlive=yes</span><br></pre></td></tr></table></figure>
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/witnessai1/article/details/89217498">参考1</a> | <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33039859/article/details/89503464">参考2</a> | <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33039859/article/details/89503464">整理稿</a> | <a target="_blank" rel="noopener" href="https://wangdoc.com/ssh/key.html">SSH教程</a></li>
+</ul>
+<h2 id="使用Xshell提升连接效率-可选，需要自行安装Xshell"><a href="#使用Xshell提升连接效率-可选，需要自行安装Xshell" class="headerlink" title="使用Xshell提升连接效率(可选，需要自行安装Xshell)"></a>使用Xshell提升连接效率(可选，需要自行安装Xshell)</h2><p>整体步骤分为两步：<br/></p>
+<ul>
+<li>1、构建连接跳板机的会话；</li>
+<li>2、基于构建的连接跳板机的会话连接内网服务器；<br/><br>具体配置上可参考该<a target="_blank" rel="noopener" href="https://www.cnblogs.com/wzh19820101/p/11907114.html">博客连接</a><br/></li>
+</ul>
+<h3 id="配置后的最终结果如图："><a href="#配置后的最终结果如图：" class="headerlink" title="配置后的最终结果如图："></a>配置后的最终结果如图：</h3><ul>
+<li><p>1、跳板机连接（需要保持跳板机成功连接状态之后才能连接内网服务器）<br><img src="/images/xshell%E8%B7%B3%E6%9D%BF%E6%9C%BA.png" alt="xshell连接跳板机"><br><img src="/images/xshell%E8%B7%B3%E6%9D%BF%E6%9C%BA%E9%9A%A7%E9%81%93%E8%AE%BE%E7%BD%AE.png" alt="隧道设置"></p>
+</li>
+<li><p>2、之后便可直接访问登录6001接口，连接内网服务器。<br><img src="/images/%E5%86%85%E7%BD%91%E6%9C%8D%E5%8A%A1%E5%99%A8.PNG" alt="内网服务器连接设置"></p>
+</li>
+</ul>
+<h2 id="使用Pycharm专业版连接远程解释器"><a href="#使用Pycharm专业版连接远程解释器" class="headerlink" title="使用Pycharm专业版连接远程解释器"></a>使用Pycharm专业版连接远程解释器</h2><ul>
+<li>1.点击tool -&gt; deployment -&gt; configuration进行配置。<br><br/>Connection用于配置主机连接；Mapping用于将本地项目文件夹映射到服务器对应位置（会自动实时上传当前的代码）<br><img src="/images/pycharm%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E8%A7%A3%E9%87%8A%E5%99%A8.png" alt="pycharm连接远程解释器"></li>
+<li>2.修改项目解释器为远程解释器。<br><br/>点击file -&gt; setting -&gt; (project下的)python interpreter选择第一步中已经配置的远程服务器即可。<br><img src="/images/pycharm%E8%A7%A3%E9%87%8A%E5%99%A8%E4%BF%AE%E6%94%B9.PNG" alt="解释器修改"><br>默认解释器如图，也可自行在服务器上安装其他版本Python后食用。<br><img src="/images/%E9%BB%98%E8%AE%A4%E7%9A%84%E8%BF%9C%E7%A8%8B%E8%A7%A3%E9%87%8A%E5%99%A8.PNG" alt="解释器连接"></li>
+</ul>
+<p>选择确定之后该项目便会自动使用远程服务器进行运行啦~</p>
 
       
     </div>
@@ -352,15 +376,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2021/02/10/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/02/11/pycharm%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E8%B7%B3%E6%9D%BF%E6%9C%BA%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="prev" title="pycharm远程连接跳板机和服务器">
-                pycharm远程连接跳板机和服务器 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -478,7 +502,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">2.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AESSH%E9%9A%A7%E9%81%93"><span class="nav-number">3.</span> <span class="nav-text">设置SSH隧道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Xshell%E6%8F%90%E5%8D%87%E8%BF%9E%E6%8E%A5%E6%95%88%E7%8E%87-%E5%8F%AF%E9%80%89%EF%BC%8C%E9%9C%80%E8%A6%81%E8%87%AA%E8%A1%8C%E5%AE%89%E8%A3%85Xshell"><span class="nav-number">4.</span> <span class="nav-text">使用Xshell提升连接效率(可选，需要自行安装Xshell)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%90%8E%E7%9A%84%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C%E5%A6%82%E5%9B%BE%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">配置后的最终结果如图：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Pycharm%E4%B8%93%E4%B8%9A%E7%89%88%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E8%A7%A3%E9%87%8A%E5%99%A8"><span class="nav-number">5.</span> <span class="nav-text">使用Pycharm专业版连接远程解释器</span></a></li></ol></div>
             
 
           </div>
